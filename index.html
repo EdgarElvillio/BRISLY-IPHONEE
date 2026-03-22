@@ -20,9 +20,8 @@
         .sidebar.hide-sidemenu { margin-left: -260px; }
         .logo-section { padding: 40px 20px 20px; text-align: center; }
         .logo-circle { width: 50px; height: 50px; background: var(--main); color: #000; border-radius: 12px; line-height: 50px; font-weight: 800; margin: 0 auto 10px; }
-        .nav-links { list-style: none; padding: 10px; flex-grow: 1; }
+        .nav-links { list-style: none; padding: 10px; flex-grow: 1; overflow-y: auto; }
         
-        /* NAV ITEM ANIMATION */
         .nav-item { padding: 15px; border-radius: 12px; cursor: pointer; color: #888; margin-bottom: 8px; transition: 0.3s; display: flex; align-items: center; gap: 10px; }
         .nav-item:hover { transform: scale(1.02); background: rgba(255,255,255,0.05); color: #fff; }
         .nav-item.active { background: rgba(0,255,204,0.1); color: var(--main); font-weight: bold; }
@@ -39,10 +38,9 @@
         .btn-glow { background: var(--main); color: #000; padding: 15px 30px; border-radius: 12px; border: none; font-weight: 800; cursor: pointer; transition: 0.3s; text-decoration: none; display: inline-block; }
         .btn-glow:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 5px 15px rgba(0,255,204,0.3); }
 
-        /* KATALOG PRODUK - FIXED STYLE */
+        /* KATALOG */
         .grid-katalog { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; margin-top: 20px; }
-        .prod-card { background: var(--card); padding: 15px; border-radius: 20px; border: 1px solid #333; cursor: pointer; position: relative; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .prod-card:hover { transform: scale(1.05); border-color: var(--main); }
+        .prod-card { background: var(--card); padding: 15px; border-radius: 20px; border: 1px solid #333; cursor: pointer; position: relative; transition: 0.3s; }
         .prod-card img { width: 100%; border-radius: 15px; margin-bottom: 10px; display: block; object-fit: cover; aspect-ratio: 1/1; }
         .prod-card.is-sold img { opacity: 0.3; filter: grayscale(1); }
         .badge-sold { position: absolute; top: 20px; right: 20px; background: #ff4444; color: white; padding: 5px 12px; border-radius: 8px; font-weight: 900; font-size: 0.8rem; z-index: 5; }
@@ -54,31 +52,23 @@
         /* ADMIN AREA */
         .admin-wrapper { display: grid; grid-template-columns: 380px 1fr; gap: 30px; }
         .card-admin { background: var(--card); padding: 25px; border-radius: 20px; border: 1px solid #333; height: fit-content; }
-        .main-input { width: 100%; padding: 14px; background: #000; border: 1px solid #333; color: white; border-radius: 10px; margin-bottom: 12px; box-sizing: border-box; font-family: inherit; }
+        .main-input { width: 100%; padding: 14px; background: #000; border: 1px solid #333; color: white; border-radius: 10px; margin-bottom: 12px; box-sizing: border-box; }
         
-        /* ⬇️ PERBAIKAN POPUP DETAIL UNTUK MOBILE (DITAMBAHKAN) ⬇️ */
+        /* POPUP DETAIL MOBILE */
         .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; display: none; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; }
         .popup-content { background: var(--card); border-radius: 30px; max-width: 800px; width: 100%; display: grid; grid-template-columns: 1fr 1fr; overflow: hidden; position: relative; border: 1px solid #333; animation: popUp 0.3s ease; }
         @keyframes popUp { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         .close-btn { position: absolute; top: 20px; right: 20px; background: rgba(255,0,0,0.1); color: #ff4444; border: 1px solid #ff4444; padding: 8px 15px; border-radius: 10px; cursor: pointer; font-weight: bold; z-index: 10; }
-        /* ⬆️ PERBAIKAN POPUP DETAIL UNTUK MOBILE (DITAMBAHKAN) ⬆️ */
 
         @media (max-width: 768px) {
             .sidebar { position: fixed; left: -260px; }
             .sidebar.show { left: 0; }
-            .sidebar.hide-sidemenu { left: -260px; }
             .main-content { padding: 80px 20px 20px; }
             .admin-wrapper { grid-template-columns: 1fr; }
-            
-            /* ⬇️ PERBAIKAN POPUP MOBILE (PENTING) ⬇️ */
             .popup-content { grid-template-columns: 1fr; max-height: 90vh; overflow-y: auto; border-radius: 20px; }
-            .popup-content img { height: 250px; object-fit: cover; }
+            .popup-content img { height: 250px; }
             .popup-content > div { padding: 20px !important; }
-            .pop-info-h2 { font-size: 1.5rem; margin-bottom: 5px; }
-            .pop-info-h3 { font-size: 1.2rem; margin: 10px 0; }
-            .pop-spek-box { padding: 15px !important; font-size: 0.8rem; }
             .close-btn { top: 10px; right: 10px; padding: 5px 10px; font-size: 0.7rem; }
-            /* ⬆️ PERBAIKAN POPUP MOBILE (PENTING) ⬆️ */
         }
     </style>
 </head>
@@ -103,8 +93,8 @@
     <li class="nav-item admin-link" onclick="showPage('pesan-masuk', this)" style="display:none;"><i class="fa-solid fa-envelope"></i> Pesan Customer</li>
     <li class="nav-item admin-link" onclick="showPage('admin', this)" style="display:none;"><i class="fa-solid fa-screwdriver-wrench"></i> Pusat Kontrol</li>
   </ul>
-  <div style="padding: 20px;">
-    <button class="main-input" id="lock-btn" onclick="askAdminPass()" style="cursor:pointer">🔑 Admin Login</button>
+  <div style="padding: 20px; padding-bottom: 80px;"> 
+    <button class="main-input" id="lock-btn" onclick="askAdminPass()" style="cursor:pointer; border: 1px solid var(--main);">🔑 Admin Login</button>
     <button id="logout-btn" onclick="location.reload()" style="display:none; background:#ff4444; border:none; width:100%; padding:12px; border-radius:10px; color:white; font-weight:bold; cursor:pointer">🔒 Logout</button>
   </div>
 </nav>
@@ -114,17 +104,14 @@
     <div style="text-align:center; padding-top: 30px;">
       <p style="color:#555; letter-spacing: 3px; font-weight: bold; margin-bottom: 5px;">SELAMAT DATANG DI</p>
       <h1 style="font-size: clamp(2rem, 5vw, 3.5rem); color: var(--main); font-weight: 900; margin:0;">BRISLY IPHONE STORE</h1>
-      
       <div class="stat-box">
         <h3 id="totalStok" style="font-size: 5rem; color: var(--main); margin:0;">0</h3>
         <p style="margin:0; letter-spacing: 2px;">Unit Ready Saat Ini</p>
       </div>
-      
       <div style="margin: 20px 0;">
         <button class="btn-glow" onclick="showPage('stok')">📦 Jelajahi Katalog</button>
         <button class="btn-glow" style="background:#222; color:white; border:1px solid #444; margin-left:10px;" onclick="showPage('feedback-page')">📩 Kritik & Saran</button>
       </div>
-      
       <div style="display:flex; gap:15px; justify-content:center; margin-top:30px; flex-wrap:wrap;">
         <a href="https://instagram.com/brislygadget" target="_blank" class="soc-btn"><i class="fa-brands fa-instagram"></i> Instagram</a>
         <a href="https://tiktok.com/@brislygadget" target="_blank" class="soc-btn"><i class="fa-brands fa-tiktok"></i> TikTok</a>
@@ -182,10 +169,10 @@
         <button class="close-btn" onclick="closePopup()">TUTUP</button>
         <img id="pop-img" style="width:100%; height:100%; object-fit:cover;">
         <div style="padding:40px; box-sizing: border-box;">
-            <h2 id="pop-nama" class="pop-info-h2" style="color:var(--main); margin-top:0;"></h2>
+            <h2 id="pop-nama" style="color:var(--main); margin-top:0;"></h2>
             <p id="pop-info" style="font-weight:bold; color:#888; margin-bottom: 5px;"></p>
-            <h3 id="pop-harga" class="pop-info-h3" style="font-size:2rem; margin:15px 0;"></h3>
-            <div id="pop-spek" class="pop-spek-box" style="background:#000; padding:20px; border-radius:15px; margin-bottom:25px; white-space:pre-line; color:#ccc; overflow-y: auto;"></div>
+            <h3 id="pop-harga" style="font-size:2rem; margin:15px 0;"></h3>
+            <div id="pop-spek" style="background:#000; padding:20px; border-radius:15px; margin-bottom:25px; white-space:pre-line; color:#ccc; overflow-y: auto;"></div>
             <a id="wa-order-btn" target="_blank" class="btn-glow" style="text-align:center; width:100%; box-sizing:border-box;"></a>
         </div>
     </div>
@@ -198,7 +185,6 @@
     const WA_NUMBER = "628998873674"; 
     const ADMIN_PASS = "admin1234";
 
-    // Konfigurasi Firebase Milikmu
     const firebaseConfig = {
         apiKey: "AIzaSyDyGtThF4kbQV_ZHzYFrHU0nuIhh05Dtx4",
         authDomain: "brisly-store.firebaseapp.com",
@@ -213,12 +199,10 @@
     let tempImg = ""; 
     let editId = null;
 
-    // LOADER ANIMATION
     window.onload = () => { 
         setTimeout(() => document.getElementById("loader").classList.add("loader-hidden"), 1500); 
     };
 
-    // SYNC DATA DARI FIREBASE SECARA REALTIME
     db.ref('products').on('value', (snap) => {
         const data = snap.val();
         products = data ? Object.values(data) : [];
@@ -262,8 +246,7 @@
         
         const id = editId || Date.now();
         const productData = {
-            id: id,
-            nama: n,
+            id: id, nama: n,
             storage: document.getElementById('in-storage').value,
             kondisi: document.getElementById('in-kondisi').value,
             spek: document.getElementById('in-spek').value,
@@ -319,13 +302,11 @@
         document.getElementById("pop-spek").innerText = p.spek || "Tidak ada deskripsi.";
         const waBtn = document.getElementById("wa-order-btn");
         if(p.sold) {
-            waBtn.href = "#"; waBtn.style.background = "#444"; waBtn.style.cursor = "not-allowed";
-            waBtn.innerHTML = "UNIT TERJUAL";
+            waBtn.href = "#"; waBtn.style.background = "#444"; waBtn.innerHTML = "UNIT TERJUAL";
         } else {
             const msg = `Halo Brisly Store, saya berminat dengan ${p.nama} seharga Rp ${p.harga.toLocaleString()}.`;
             waBtn.href = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
-            waBtn.style.background = "var(--main)"; waBtn.style.cursor = "pointer";
-            waBtn.innerHTML = "<i class='fa-brands fa-whatsapp'></i> Order Via WA";
+            waBtn.style.background = "var(--main)"; waBtn.innerHTML = "<i class='fa-brands fa-whatsapp'></i> Order Via WA";
         }
         document.getElementById("popup-detail").style.display = "flex";
     }
@@ -345,13 +326,10 @@
         document.getElementById('in-kondisi').value = p.kondisi;
         document.getElementById('in-spek').value = p.spek;
         document.getElementById('in-harga').value = p.harga;
-        editId = id; 
-        document.getElementById('btn-save').innerText = "Update Unit";
-        showPage('admin');
+        editId = id; document.getElementById('btn-save').innerText = "Update Unit"; showPage('admin');
     }
 
     function del(id) { if(confirm("Hapus?")) db.ref('products/' + id).remove(); }
-    
     function previewImage(i) {
         const r = new FileReader();
         r.onload = (e) => { tempImg = e.target.result; document.getElementById('file-status').innerText = "✅ Foto OK"; };
@@ -363,13 +341,8 @@
         const p = document.getElementById('fb-pesan').value;
         if(!p) return alert("Isi pesan!");
         const id = Date.now();
-        db.ref('feedbacks/' + id).set({
-            id: id, nama: n, pesan: p, tgl: new Date().toLocaleString()
-        }).then(() => {
-            alert("Terkirim!"); 
-            document.getElementById('fb-nama').value = ""; 
-            document.getElementById('fb-pesan').value = "";
-            showPage('home');
+        db.ref('feedbacks/' + id).set({ id, nama: n, pesan: p, tgl: new Date().toLocaleString() }).then(() => {
+            alert("Terkirim!"); document.getElementById('fb-nama').value = ""; document.getElementById('fb-pesan').value = ""; showPage('home');
         });
     }
 
@@ -383,8 +356,7 @@
                 <button onclick="delFB(${f.id})" style="color:red; background:none; border:none; cursor:pointer;">Hapus</button>
             </div>`).join('');
     }
-
-    function delFB(id) { if(confirm("Hapus feedback?")) db.ref('feedbacks/' + id).remove(); }
+    function delFB(id) { if(confirm("Hapus?")) db.ref('feedbacks/' + id).remove(); }
     function chatAdmin() { window.open(`https://wa.me/${WA_NUMBER}`, '_blank'); }
 </script>
 </body>
