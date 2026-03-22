@@ -9,67 +9,41 @@
     <style>
         :root { --main: #00ffcc; --bg: #0b0d11; --side: #12141a; --card: #1c2128; }
         body { margin: 0; font-family: 'Inter', sans-serif; background: var(--bg); color: white; display: flex; height: 100vh; overflow: hidden; }
-
-        /* LOADER */
         .loader-wrapper { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; transition: 0.8s ease; }
         .loader-logo { width: 80px; height: 80px; background: var(--main); color: #000; border-radius: 20px; font-size: 2.5rem; font-weight: 900; line-height: 80px; text-align: center; box-shadow: 0 0 20px var(--main); margin-bottom: 20px; }
         .loader-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-
-        /* SIDEBAR */
         .sidebar { width: 260px; background: var(--side); border-right: 1px solid #222; display: flex; flex-direction: column; height: 100vh; transition: 0.4s; z-index: 3000; position: relative; }
         .sidebar.hide-sidemenu { margin-left: -260px; }
         .logo-section { padding: 40px 20px 20px; text-align: center; }
         .logo-circle { width: 50px; height: 50px; background: var(--main); color: #000; border-radius: 12px; line-height: 50px; font-weight: 800; margin: 0 auto 10px; }
         .nav-links { list-style: none; padding: 10px; flex-grow: 1; }
-        
-        /* NAV ITEM ANIMATION */
         .nav-item { padding: 15px; border-radius: 12px; cursor: pointer; color: #888; margin-bottom: 8px; transition: 0.3s; display: flex; align-items: center; gap: 10px; }
         .nav-item:hover { transform: scale(1.02); background: rgba(255,255,255,0.05); color: #fff; }
         .nav-item.active { background: rgba(0,255,204,0.1); color: var(--main); font-weight: bold; }
-
-        /* MAIN CONTENT */
         .main-content { flex: 1; padding: 40px; overflow-y: auto; position: relative; }
         .menu-toggle { position: fixed; top: 20px; left: 20px; z-index: 4000; cursor: pointer; background: var(--card); padding: 10px 15px; border-radius: 8px; border: 1px solid #333; color: var(--main); }
         .page { display: none; }
         .page.active { display: block; animation: fadeIn 0.4s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* STAT BOX DASHBOARD */
         .stat-box { background: var(--card); padding: 30px; border-radius: 25px; border: 1px solid #333; display: inline-block; min-width: 250px; margin: 20px 0; }
         .btn-glow { background: var(--main); color: #000; padding: 15px 30px; border-radius: 12px; border: none; font-weight: 800; cursor: pointer; transition: 0.3s; text-decoration: none; display: inline-block; }
         .btn-glow:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 5px 15px rgba(0,255,204,0.3); }
-
-        /* KATALOG PRODUK - FIXED STYLE */
         .grid-katalog { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; margin-top: 20px; }
         .prod-card { background: var(--card); padding: 15px; border-radius: 20px; border: 1px solid #333; cursor: pointer; position: relative; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .prod-card:hover { transform: scale(1.05); border-color: var(--main); }
         .prod-card img { width: 100%; border-radius: 15px; margin-bottom: 10px; display: block; object-fit: cover; aspect-ratio: 1/1; }
         .prod-card.is-sold img { opacity: 0.3; filter: grayscale(1); }
         .badge-sold { position: absolute; top: 20px; right: 20px; background: #ff4444; color: white; padding: 5px 12px; border-radius: 8px; font-weight: 900; font-size: 0.8rem; z-index: 5; }
-
-        /* SOSMED */
         .soc-btn { text-decoration: none; color: white; background: var(--card); padding: 12px 20px; border-radius: 12px; border: 1px solid #333; font-weight: bold; display: flex; align-items: center; gap: 8px; transition: 0.3s; }
         .soc-btn.wa { background: #25d366 !important; border: none; }
-
-        /* ADMIN AREA */
         .admin-wrapper { display: grid; grid-template-columns: 380px 1fr; gap: 30px; }
         .card-admin { background: var(--card); padding: 25px; border-radius: 20px; border: 1px solid #333; height: fit-content; }
         .main-input { width: 100%; padding: 14px; background: #000; border: 1px solid #333; color: white; border-radius: 10px; margin-bottom: 12px; box-sizing: border-box; font-family: inherit; }
-        
-        /* POPUP DETAIL ANIMATION */
         .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; display: none; align-items: center; justify-content: center; padding: 20px; }
         .popup-content { background: var(--card); border-radius: 30px; max-width: 800px; width: 100%; display: grid; grid-template-columns: 1fr 1fr; overflow: hidden; position: relative; border: 1px solid #333; animation: popUp 0.3s ease; }
         @keyframes popUp { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         .close-btn { position: absolute; top: 20px; right: 20px; background: rgba(255,0,0,0.1); color: #ff4444; border: 1px solid #ff4444; padding: 8px 15px; border-radius: 10px; cursor: pointer; font-weight: bold; z-index: 10; }
-
-        @media (max-width: 768px) {
-            .sidebar { position: fixed; left: -260px; }
-            .sidebar.show { left: 0; }
-            .sidebar.hide-sidemenu { left: -260px; }
-            .main-content { padding: 80px 20px 20px; }
-            .admin-wrapper, .popup-content { grid-template-columns: 1fr; }
-            .popup-content img { height: 300px; }
-        }
+        @media (max-width: 768px) { .sidebar { position: fixed; left: -260px; } .sidebar.show { left: 0; } .main-content { padding: 80px 20px 20px; } .admin-wrapper, .popup-content { grid-template-columns: 1fr; } .popup-content img { height: 300px; } }
     </style>
 </head>
 <body>
@@ -104,17 +78,14 @@
     <div style="text-align:center; padding-top: 30px;">
       <p style="color:#555; letter-spacing: 3px; font-weight: bold; margin-bottom: 5px;">SELAMAT DATANG DI</p>
       <h1 style="font-size: clamp(2rem, 5vw, 3.5rem); color: var(--main); font-weight: 900; margin:0;">BRISLY IPHONE STORE</h1>
-      
       <div class="stat-box">
         <h3 id="totalStok" style="font-size: 5rem; color: var(--main); margin:0;">0</h3>
         <p style="margin:0; letter-spacing: 2px;">Unit Ready Saat Ini</p>
       </div>
-      
       <div style="margin: 20px 0;">
         <button class="btn-glow" onclick="showPage('stok')">📦 Jelajahi Katalog</button>
         <button class="btn-glow" style="background:#222; color:white; border:1px solid #444; margin-left:10px;" onclick="showPage('feedback-page')">📩 Kritik & Saran</button>
       </div>
-      
       <div style="display:flex; gap:15px; justify-content:center; margin-top:30px; flex-wrap:wrap;">
         <a href="https://instagram.com/brislygadget" target="_blank" class="soc-btn"><i class="fa-brands fa-instagram"></i> Instagram</a>
         <a href="https://tiktok.com/@brislygadget" target="_blank" class="soc-btn"><i class="fa-brands fa-tiktok"></i> TikTok</a>
@@ -181,17 +152,47 @@
     </div>
 </div>
 
+<script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
+
 <script>
     const WA_NUMBER = "628998873674"; 
     const ADMIN_PASS = "admin1234";
-    let products = JSON.parse(localStorage.getItem('brisly_v55_db')) || [];
-    let feedbacks = JSON.parse(localStorage.getItem('brisly_v55_fb')) || [];
-    let tempImg = ""; let editId = null;
+    
+    // Firebase Config - DISAMAKAN DENGAN MILIKMU
+    const firebaseConfig = {
+        apiKey: "AIzaSyDyGtThF4kbQV_ZHzYFrHU0nuIhh05Dtx4",
+        authDomain: "brisly-store.firebaseapp.com",
+        projectId: "brisly-store",
+        databaseURL: "https://brisly-store-default-rtdb.asia-southeast1.firebasedatabase.app"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    let products = [];
+    let feedbacks = [];
+    let tempImg = ""; 
+    let editId = null;
 
     window.onload = () => { 
         setTimeout(() => document.getElementById("loader").classList.add("loader-hidden"), 1500); 
-        save(); renderFeedbacks();
     };
+
+    // Sinkronisasi data dari Firebase secara Realtime
+    db.ref('products').on('value', (snap) => {
+        const data = snap.val();
+        products = data ? Object.values(data) : [];
+        render();
+        renderAdmin();
+        document.getElementById('totalStok').innerText = products.filter(p => !p.sold).length;
+    });
+
+    db.ref('feedbacks').on('value', (snap) => {
+        const data = snap.val();
+        feedbacks = data ? Object.values(data) : [];
+        renderFeedbacks();
+    });
 
     function toggleSidebar() { 
         const sb = document.getElementById("sidebar");
@@ -219,14 +220,25 @@
         const n = document.getElementById('in-nama').value;
         const h = document.getElementById('in-harga').value;
         if(!n || !h || (!tempImg && !editId)) return alert("Lengkapi data!");
-        if(editId) {
-            const i = products.findIndex(p => p.id === editId);
-            products[i] = { ...products[i], nama:n, storage:document.getElementById('in-storage').value, kondisi:document.getElementById('in-kondisi').value, spek:document.getElementById('in-spek').value, harga:parseInt(h), img:tempImg || products[i].img };
-            editId = null; document.getElementById('btn-save').innerText = "Simpan Ke Database";
-        } else {
-            products.push({ id:Date.now(), nama:n, storage:document.getElementById('in-storage').value, kondisi:document.getElementById('in-kondisi').value, spek:document.getElementById('in-spek').value, harga:parseInt(h), img:tempImg, sold:false });
-        }
-        save(); resetForm();
+        
+        const id = editId || Date.now();
+        const productData = {
+            id: id,
+            nama: n,
+            storage: document.getElementById('in-storage').value,
+            kondisi: document.getElementById('in-kondisi').value,
+            spek: document.getElementById('in-spek').value,
+            harga: parseInt(h),
+            img: tempImg || (editId ? products.find(p => p.id === editId).img : ""),
+            sold: editId ? products.find(p => p.id === editId).sold : false
+        };
+
+        db.ref('products/' + id).set(productData).then(() => {
+            alert(editId ? "Unit Diupdate!" : "Unit Tersimpan!");
+            editId = null; 
+            document.getElementById('btn-save').innerText = "Simpan Ke Database";
+            resetForm();
+        });
     }
 
     function resetForm() {
@@ -237,10 +249,10 @@
     function render() {
         const cont = document.getElementById("productContainer");
         const s = document.getElementById("search").value.toLowerCase();
-        cont.innerHTML = products.filter(p => p.nama.toLowerCase().includes(s)).map(p => `
+        cont.innerHTML = products.filter(p => p.nama.toLowerCase().includes(s)).reverse().map(p => `
             <div class="prod-card ${p.sold ? 'is-sold' : ''}" onclick="openDetail(${p.id})">
                 ${p.sold ? '<div class="badge-sold">SOLD</div>' : ''}
-                <img src="${p.img}">
+                <img src="${p.img || 'https://via.placeholder.com/150'}">
                 <h3 style="margin:5px 0;">${p.nama}</h3>
                 <p style="color:var(--main); font-weight:900; margin:0;">Rp ${p.harga.toLocaleString()}</p>
                 <small style="color:#666;">${p.storage}GB - ${p.kondisi}</small>
@@ -248,7 +260,7 @@
     }
 
     function renderAdmin() {
-        document.getElementById("adminList").innerHTML = products.map(p => `
+        document.getElementById("adminList").innerHTML = products.slice().reverse().map(p => `
             <div style="background:#000; padding:15px; border-radius:12px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; border:1px solid #222;">
                 <div><b>${p.nama}</b><br><small>Rp ${p.harga.toLocaleString()}</small></div>
                 <div style="display:flex; gap:8px;">
@@ -261,7 +273,7 @@
 
     function openDetail(id) {
         const p = products.find(x => x.id === id);
-        document.getElementById("pop-img").src = p.img;
+        document.getElementById("pop-img").src = p.img || 'https://via.placeholder.com/150';
         document.getElementById("pop-nama").innerText = p.nama;
         document.getElementById("pop-info").innerText = `${p.storage}GB | ${p.kondisi}`;
         document.getElementById("pop-harga").innerText = `Rp ${p.harga.toLocaleString()}`;
@@ -281,8 +293,11 @@
 
     function closePopup() { document.getElementById("popup-detail").style.display = "none"; }
     function closePopupOverlay(e) { if(e.target.id === "popup-detail") closePopup(); }
-    function toggleSold(id) { const i = products.findIndex(p => p.id === id); products[i].sold = !products[i].sold; save(); }
-    function save() { localStorage.setItem('brisly_v55_db', JSON.stringify(products)); render(); renderAdmin(); document.getElementById('totalStok').innerText = products.filter(p => !p.sold).length; }
+    function toggleSold(id) { 
+        const p = products.find(x => x.id === id);
+        db.ref('products/' + id).update({ sold: !p.sold });
+    }
+    
     function editProduct(id) {
         const p = products.find(x => x.id === id);
         document.getElementById('in-nama').value = p.nama;
@@ -290,30 +305,46 @@
         document.getElementById('in-kondisi').value = p.kondisi;
         document.getElementById('in-spek').value = p.spek;
         document.getElementById('in-harga').value = p.harga;
-        editId = id; document.getElementById('btn-save').innerText = "Update Unit";
+        editId = id; 
+        document.getElementById('btn-save').innerText = "Update Unit";
         showPage('admin');
     }
-    function del(id) { if(confirm("Hapus?")) { products = products.filter(p => p.id !== id); save(); } }
+
+    function del(id) { if(confirm("Hapus?")) db.ref('products/' + id).remove(); }
+    
     function previewImage(i) {
         const r = new FileReader();
         r.onload = (e) => { tempImg = e.target.result; document.getElementById('file-status').innerText = "✅ Foto OK"; };
         r.readAsDataURL(i.files[0]);
     }
+
     function submitFeedback() {
         let n = document.getElementById('fb-nama').value || "Anonim";
         const p = document.getElementById('fb-pesan').value;
         if(!p) return alert("Isi pesan!");
-        feedbacks.push({ id:Date.now(), nama:n, pesan:p, tgl:new Date().toLocaleString() });
-        localStorage.setItem('brisly_v55_fb', JSON.stringify(feedbacks));
-        alert("Terkirim!"); document.getElementById('fb-nama').value = ""; document.getElementById('fb-pesan').value = "";
-        showPage('home'); renderFeedbacks();
+        const id = Date.now();
+        db.ref('feedbacks/' + id).set({
+            id: id, nama: n, pesan: p, tgl: new Date().toLocaleString()
+        }).then(() => {
+            alert("Terkirim!"); 
+            document.getElementById('fb-nama').value = ""; 
+            document.getElementById('fb-pesan').value = "";
+            showPage('home');
+        });
     }
+
     function renderFeedbacks() {
         const list = document.getElementById('feedbackList');
         if(!list) return;
-        list.innerHTML = feedbacks.map(f => `<div class="card-admin" style="margin-bottom:10px;"><b style="color:var(--main)">${f.nama}</b> <small>(${f.tgl})</small><p>${f.pesan}</p><button onclick="delFB(${f.id})" style="color:red; background:none; border:none; cursor:pointer;">Hapus</button></div>`).join('');
+        list.innerHTML = feedbacks.slice().reverse().map(f => `
+            <div class="card-admin" style="margin-bottom:10px;">
+                <b style="color:var(--main)">${f.nama}</b> <small>(${f.tgl})</small>
+                <p>${f.pesan}</p>
+                <button onclick="delFB(${f.id})" style="color:red; background:none; border:none; cursor:pointer;">Hapus</button>
+            </div>`).join('');
     }
-    function delFB(id) { feedbacks = feedbacks.filter(f => f.id !== id); localStorage.setItem('brisly_v55_fb', JSON.stringify(feedbacks)); renderFeedbacks(); }
+
+    function delFB(id) { if(confirm("Hapus feedback?")) db.ref('feedbacks/' + id).remove(); }
     function chatAdmin() { window.open(`https://wa.me/${WA_NUMBER}`, '_blank'); }
 </script>
 </body>
